@@ -1,38 +1,19 @@
 package service
 
-import (
-	"fmt"
-	"net/http"
+import "net/http"
 
-	"github.com/edge-go/core"
-	"github.com/edge-go/util"
-)
-
-type Edge struct {
+type HttpService struct {
+	repo *ServiceRepo
+	edge *Edge
 }
 
-func NewEdge() *Edge {
-	return &Edge{}
+func NewHttpService(repo *ServiceRepo, edge *Edge) *HttpService {
+	return &HttpService{repo, edge}
 }
 
-func (e *Edge) Proxy(serviceDef core.ServiceDef, servicePath core.ServicePath, request *http.Request) {
-	contentType := request.Header.Get("Content-Type")
-	url := util.MakeHttpUrl(serviceDef, servicePath)
-	fmt.Printf("Making request to url: %s\n", url)
+func (hs *HttpService) Proxy(edgePath string, request *http.Request) {
+	sPath := hs.repo.GetPath(edgePath)
+	sDef := hs.repo.GetDef(sPath)
 
-	var resp *http.Response
-	var err error
-
-	switch method := servicePath.Method; method {
-	case "POST":
-		resp, err = http.Post(url, contentType, request.Body)
-	case "GET":
-		resp, err = http.Get(url)
-	}
-
-	if err != nil {
-		fmt.Printf("Error: in calling %s\n", url)
-	} else {
-		fmt.Printf("Made a call to %s and got response: %d\n", servicePath.Path, resp.StatusCode)
-	}
+	hs.edge.Proxy(sDef, sPath, request)
 }

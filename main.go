@@ -18,7 +18,7 @@ func main() {
 
 	tstoreSPHeaders := map[string]string{}
 	tstoreSP := core.NewServicePath("v1/entity/changes/meta_13", "GET", tstoreSPHeaders, 1, 1000)
-	serviceRepo.RegisterEdge(tstoreSP, tstoreSD)
+	serviceRepo.RegisterEdge("changes", tstoreSP, tstoreSD)
 
 	sdef1 := serviceRepo.GetDef(tstoreSP)
 	fmt.Printf("Repo1: %v\n", sdef1)
@@ -26,13 +26,17 @@ func main() {
 	sdefs := serviceRepo.GetDefs()
 	fmt.Printf("Registered ServiceDefs: %v\n", sdefs)
 
+	sPaths := serviceRepo.GetPaths()
+	fmt.Printf("Registered ServicePaths: %v\n", sPaths)
+
 	tstoreReq, err := http.NewRequest(tstoreSP.Method, tstoreSP.Path, nil)
 	if err != nil {
 		fmt.Printf("Error: Unable to create request %+v\n", tstoreReq)
 	}
 
 	edge := service.NewEdge()
-	edge.Proxy(tstoreSD, tstoreSP, tstoreReq)
+	httpSvc := service.NewHttpService(serviceRepo, edge)
+	httpSvc.Proxy("changes", tstoreReq)
 
 	fmt.Printf("done..")
 }

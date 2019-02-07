@@ -12,9 +12,13 @@ func main() {
 
 	serviceRepo := service.NewServiceRepo()
 
-	serviceDef1 := core.NewServiceDef("http", "localhost", 18080)
-	serviceRepo.Register("/hello", serviceDef1)
+	tstoreSD := core.NewServiceDef("http", "localhost", 18080)
+	serviceRepo.Register(tstoreSD)
+	serviceRepo.RegisterEdge("/changes", tstoreSD)
 
-	repo1 := serviceRepo.Get("/hello")
-	fmt.Printf("Repo1: %v\n", repo1)
+	sdef1 := serviceRepo.GetDef("/changes")
+	fmt.Printf("Repo1: %v\n", sdef1)
+
+	sdefs := serviceRepo.GetDefs()
+	fmt.Printf("Registered ServiceDefs: %v\n", sdefs)
 }

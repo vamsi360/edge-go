@@ -1,0 +1,11 @@
+service:
+  serviceDef:
+    proto: "http"
+    host: "localhost"
+    port: 8443
+
+  servicePath:
+    path: "/v1"
+    method: "post"
+    concurrency: 16
+    timeout: 4

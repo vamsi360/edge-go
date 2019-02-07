@@ -2,12 +2,15 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
+	"io/ioutil"
+	"log"
 
 	"github.com/edge-go/api"
 	"github.com/edge-go/core"
 	"github.com/edge-go/service"
+
+	"gopkg.in/yaml.v2"
 )
 
 func main() {
@@ -45,6 +48,41 @@ func main() {
 
 	//httpSvc.Proxy(tstoreEP, tstoreReq)
 
-	log.Fatal(http.ListenAndServe(":6001", nil))
-	fmt.Printf("done..")
+	//log.Fatal(http.ListenAndServe(":6001", nil))
+	//fmt.Printf("done..\n")
+
+	var c conf
+    c.getConf()
+    fmt.Println(c)
+}
+
+type conf struct {
+	Service struct {
+		ServiceDef struct {
+			Proto string `yaml:"proto"`
+			Host  string `yaml:"host"`
+			Port  int16 `yaml:"port"`
+		} `yaml:"serviceDef"`
+		ServicePath struct {
+			Path string `yaml:"path"`
+		    Method string `yaml:"method"`
+		    Concurrency int16 `yaml:"concurrency"`
+		    Timeout int16 `yaml:"timeout"`
+		} `yaml:"servicePath"`
+	} `yaml:"service"`
+}
+
+
+func (c *conf) getConf() *conf {
+
+    yamlFile, err := ioutil.ReadFile("config.yaml")
+    if err != nil {
+        log.Printf("yamlFile.Get err   #%v ", err)
+    }
+    err = yaml.Unmarshal(yamlFile, c)
+    if err != nil {
+        log.Fatalf("Unmarshal: %v", err)
+    }
+
+    return c
 }

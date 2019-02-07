@@ -21,17 +21,17 @@ func (s *ServiceRepo) Register(serviceDef core.ServiceDef) {
 	s.defsMap[serviceDef] = true
 }
 
-func (s *ServiceRepo) RegisterEdge(edgePath string, serviceDef core.ServiceDef) bool {
+func (s *ServiceRepo) RegisterEdge(servicePath core.ServicePath, serviceDef core.ServiceDef) bool {
 	if !s.defsMap[serviceDef] {
 		fmt.Printf("Warning: ServiceDef %+v not found\n", serviceDef)
 		return false
 	}
-	s.repoMap[edgePath] = serviceDef
+	s.repoMap[servicePath.Hash()] = serviceDef
 	return true
 }
 
-func (s *ServiceRepo) GetDef(edgePath string) core.ServiceDef {
-	return s.repoMap[edgePath]
+func (s *ServiceRepo) GetDef(servicePath core.ServicePath) core.ServiceDef {
+	return s.repoMap[servicePath.Hash()]
 }
 
 func (s *ServiceRepo) GetDefs() []core.ServiceDef {

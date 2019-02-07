@@ -14,6 +14,5 @@ func NewHttpService(repo *ServiceRepo, edge *Edge) *HttpService {
 func (hs *HttpService) Proxy(edgePath string, request *http.Request) {
 	sPath := hs.repo.GetPath(edgePath)
 	sDef := hs.repo.GetDef(sPath)
-
 	hs.edge.Proxy(sDef, sPath, request)
 }

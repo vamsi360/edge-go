@@ -1,2 +1,7 @@
-# edge-go
+* edge-go
 An API edge proxy for a large corporation with latent microservices
+
+** Building
+: go build
+: ./edge-go
+

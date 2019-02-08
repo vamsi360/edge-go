@@ -8,8 +8,9 @@ edges:
     servicePath:
       path: "v1/entity/changes/meta_13"
       method: "GET"
+      maxRequests: 1000
       concurrency: 16
-      timeout: 4
+      timeout: 10000
       errorPercent: 25
   fastOkSvc:
     edgePath: "/fast-ok"
@@ -20,6 +21,7 @@ edges:
     servicePath:
       path: "fast-ok"
       method: "GET"
+      maxRequests: 300
       concurrency: 16
       timeout: 100
       errorPercent: 10
@@ -32,6 +34,7 @@ edges:
     servicePath:
       path: "/fast-error"
       method: "post"
+      maxRequests: 300
       concurrency: 16
       timeout: 100
       errorPercent: 50
@@ -44,6 +47,7 @@ edges:
     servicePath:
       path: "slow-ok"
       method: "post"
+      maxRequests: 300
       concurrency: 16
       timeout: 100
       errorPercent: 50
@@ -56,6 +60,7 @@ edges:
     servicePath:
       path: "slow-error"
       method: "post"
+      maxRequests: 300
       concurrency: 16
       timeout: 100
       errorPercent: 50

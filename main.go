@@ -3,14 +3,11 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"io/ioutil"
-	"log"
 
 	"github.com/edge-go/api"
+	"github.com/edge-go/config"
 	"github.com/edge-go/core"
 	"github.com/edge-go/service"
-
-	"gopkg.in/yaml.v2"
 )
 
 func main() {
@@ -51,55 +48,6 @@ func main() {
 	//log.Fatal(http.ListenAndServe(":6001", nil))
 	//fmt.Printf("done..\n")
 
-	var c conf
-    c.getConf()
-    fmt.Println(c)
-}
-
-type conf struct {
-	Services []struct {
-		Tstore struct {
-			ServiceDef struct {
-				Proto string `yaml:"proto"`
-				Host  string `yaml:"host"`
-				Port  int    `yaml:"port"`
-			} `yaml:"serviceDef"`
-			ServicePath struct {
-				Path         string `yaml:"path"`
-				Method       string `yaml:"method"`
-				Concurrency  int    `yaml:"concurrency"`
-				Timeout      int    `yaml:"timeout"`
-				ErrorPercent int    `yaml:"errorPercent"`
-			} `yaml:"servicePath"`
-		} `yaml:"tstore,omitempty"`
-		Payments struct {
-			ServiceDef struct {
-				Proto string `yaml:"proto"`
-				Host  string `yaml:"host"`
-				Port  int    `yaml:"port"`
-			} `yaml:"serviceDef"`
-			ServicePath struct {
-				Path         string `yaml:"path"`
-				Method       string `yaml:"method"`
-				Concurrency  int    `yaml:"concurrency"`
-				Timeout      int    `yaml:"timeout"`
-				ErrorPercent int    `yaml:"errorPercent"`
-			} `yaml:"servicePath"`
-		} `yaml:"payments,omitempty"`
-	} `yaml:"services"`
-}
-
-
-func (c *conf) getConf() *conf {
-
-    yamlFile, err := ioutil.ReadFile("config.yaml")
-    if err != nil {
-        log.Printf("yamlFile.Get err   #%v ", err)
-    }
-    err = yaml.Unmarshal(yamlFile, c)
-    if err != nil {
-        log.Fatalf("Unmarshal: %v", err)
-    }
-
-    return c
+	conf := config.ReadConf("config.yaml")
+	fmt.Printf("Config: %+v\n", conf)
 }

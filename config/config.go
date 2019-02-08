@@ -9,7 +9,7 @@ import (
 )
 
 type Conf struct {
-	Edges EdgeConf `yaml:"edges"`
+	Edges map[string]ServiceConf `yaml:"edges"`
 }
 
 type EdgeConf struct {

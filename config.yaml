@@ -4,10 +4,10 @@ edges:
     serviceDef:
       proto: "http"
       host: "localhost"
-      port: 8443
+      port: 18080
     servicePath:
-      path: "/v1"
-      method: "post"
+      path: "v1/entity/changes/meta_13"
+      method: "GET"
       concurrency: 16
       timeout: 4
       errorPercent: 25

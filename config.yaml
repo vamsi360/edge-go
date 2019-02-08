@@ -18,8 +18,8 @@ edges:
       host: "localhost"
       port: 9001
     servicePath:
-      path: "/fast-ok"
-      method: "post"
+      path: "fast-ok"
+      method: "GET"
       concurrency: 16
       timeout: 100
       errorPercent: 10
@@ -42,7 +42,7 @@ edges:
       host: "localhost"
       port: 9101
     servicePath:
-      path: "/slow-ok"
+      path: "slow-ok"
       method: "post"
       concurrency: 16
       timeout: 100
@@ -54,7 +54,7 @@ edges:
       host: "localhost"
       port: 9105
     servicePath:
-      path: "/slow-error"
+      path: "slow-error"
       method: "post"
       concurrency: 16
       timeout: 100

@@ -31,7 +31,7 @@ func (e *Edge) Proxy(serviceDef core.ServiceDef, servicePath core.ServicePath, r
 	}
 
 	if err != nil {
-		fmt.Printf("Error: in calling %s\n", url)
+		fmt.Printf("Error: in calling %s => %+v", url, err)
 	} else {
 		fmt.Printf("Made a call to %s and got response: %d\n", servicePath.Path, resp.StatusCode)
 	}

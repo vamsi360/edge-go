@@ -1,9 +1,9 @@
 package core
 
 type ServiceDef struct {
-	Proto string
-	Host  string
-	Port  int16
+	Proto string `yaml:"proto"`
+	Host  string `yaml:"host"`
+	Port  int16  `yaml:"port"`
 }
 
 func NewServiceDef(proto string, host string, port int16) ServiceDef {
@@ -11,17 +11,17 @@ func NewServiceDef(proto string, host string, port int16) ServiceDef {
 }
 
 type ServicePath struct {
-	Path        string
-	Method      string
-	Headers     map[string]string
-	Concurrency int16
-	Timeout     int16
+	Path         string `yaml:"path"`
+	Method       string `yaml:"method"`
+	Concurrency  int16  `yaml:"concurrency"`
+	Timeout      int16  `yaml:"timeout"`
+	ErrorPercent int16  `yaml:"errorPercent"`
 }
 
 func (sp *ServicePath) Hash() string {
 	return sp.Method + "__" + sp.Path
 }
 
-func NewServicePath(path string, method string, headers map[string]string, concurrency int16, timeout int16) ServicePath {
-	return ServicePath{path, method, headers, concurrency, timeout}
+func NewServicePath(path string, method string, concurrency int16, timeout int16, errorPercent int16) ServicePath {
+	return ServicePath{path, method, concurrency, timeout, errorPercent}
 }

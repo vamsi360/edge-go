@@ -58,15 +58,34 @@ func main() {
 
 type conf struct {
 	Services []struct {
-		Name         string `yaml:"name"`
-		Proto        string `yaml:"proto"`
-		Host         string `yaml:"host"`
-		Port         int    `yaml:"port"`
-		Path         string `yaml:"path"`
-		Method       string `yaml:"method"`
-		Concurrency  int    `yaml:"concurrency"`
-		Timeout      int    `yaml:"timeout"`
-		ErrorPercent int    `yaml:"errorPercent"`
+		Tstore struct {
+			ServiceDef struct {
+				Proto string `yaml:"proto"`
+				Host  string `yaml:"host"`
+				Port  int    `yaml:"port"`
+			} `yaml:"serviceDef"`
+			ServicePath struct {
+				Path         string `yaml:"path"`
+				Method       string `yaml:"method"`
+				Concurrency  int    `yaml:"concurrency"`
+				Timeout      int    `yaml:"timeout"`
+				ErrorPercent int    `yaml:"errorPercent"`
+			} `yaml:"servicePath"`
+		} `yaml:"tstore,omitempty"`
+		Payments struct {
+			ServiceDef struct {
+				Proto string `yaml:"proto"`
+				Host  string `yaml:"host"`
+				Port  int    `yaml:"port"`
+			} `yaml:"serviceDef"`
+			ServicePath struct {
+				Path         string `yaml:"path"`
+				Method       string `yaml:"method"`
+				Concurrency  int    `yaml:"concurrency"`
+				Timeout      int    `yaml:"timeout"`
+				ErrorPercent int    `yaml:"errorPercent"`
+			} `yaml:"servicePath"`
+		} `yaml:"payments,omitempty"`
 	} `yaml:"services"`
 }
 

@@ -1,19 +1,23 @@
 services:
-  - name: tstore
-    proto: "http"
-    host: "localhost"
-    port: 8443
-    path: "/v1"
-    method: "post"
-    concurrency: 16
-    timeout: 4
-    errorPercent: 25
-  - name: payments
-    proto: "http"
-    host: "localhost"
-    port: 8443     
-    path: "/v1"
-    method: "post"
-    concurrency: 16
-    timeout: 4
-    errorPercent: 40
+  - tstore:
+      serviceDef:
+        proto: "http"
+        host: "localhost"
+        port: 8443
+      servicePath:
+        path: "/v1"
+        method: "post"
+        concurrency: 16
+        timeout: 4
+        errorPercent: 25
+  - payments:
+      serviceDef:
+        proto: "http"
+        host: "localhost"
+        port: 8443
+      servicePath:
+        path: "/v1"
+        method: "post"
+        concurrency: 16
+        timeout: 4
+        errorPercent: 40

@@ -12,14 +12,6 @@ type Conf struct {
 	Edges map[string]ServiceConf `yaml:"edges"`
 }
 
-type EdgeConf struct {
-	Tstore       ServiceConf `yaml:"tstore"`
-	FastOkSvc    ServiceConf `yaml:"fastOkSvc"`
-	FastErrorSvc ServiceConf `yaml:"fastErrorSvc"`
-	SlowOkSvc    ServiceConf `yaml:"slowOkSvc"`
-	SlowErrorSvc ServiceConf `yaml:"slowErrorSvc"`
-}
-
 type ServiceConf struct {
 	EdgePath    string           `yaml:"edgePath"`
 	ServiceDef  core.ServiceDef  `yaml:"serviceDef"`

@@ -15,7 +15,7 @@ func NewEdge() *Edge {
 	return &Edge{}
 }
 
-func (e *Edge) Proxy(serviceDef core.ServiceDef, servicePath core.ServicePath, request *http.Request) {
+func (e *Edge) Proxy(serviceDef core.ServiceDef, servicePath core.ServicePath, request *http.Request) (error, *http.Response) {
 	contentType := request.Header.Get("Content-Type")
 	url := util.MakeHttpUrl(serviceDef, servicePath)
 	fmt.Printf("Making request to url: %s\n", url)
@@ -37,4 +37,6 @@ func (e *Edge) Proxy(serviceDef core.ServiceDef, servicePath core.ServicePath, r
 	} else {
 		fmt.Printf("Made a call to %s and got response: %+v\n", servicePath.Path, resp.StatusCode)
 	}
+
+	return err, resp
 }

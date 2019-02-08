@@ -11,8 +11,8 @@ func NewHttpService(repo *ServiceRepo, edge *Edge) *HttpService {
 	return &HttpService{repo, edge}
 }
 
-func (hs *HttpService) Proxy(edgePath string, request *http.Request) {
+func (hs *HttpService) Proxy(edgePath string, request *http.Request) (error, *http.Response) {
 	sPath := hs.repo.GetPath(edgePath)
 	sDef := hs.repo.GetDef(sPath)
-	hs.edge.Proxy(sDef, sPath, request)
+	return hs.edge.Proxy(sDef, sPath, request)
 }

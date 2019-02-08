@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"html"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/afex/hystrix-go/hystrix"
@@ -29,7 +30,16 @@ func (ha *HttpApi) Handle(path string, servicePath core.ServicePath) {
 	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		err := hystrix.Do(path, func() error {
 			fmt.Fprintf(w, "URL: %q", html.EscapeString(r.URL.Path))
-			ha.httpSvc.Proxy(path, r)
+			err, resp := ha.httpSvc.Proxy(path, r)
+			if err != nil {
+				return err
+			}
+			bodyBytes, rErr := ioutil.ReadAll(resp.Body)
+			if rErr != nil {
+				return rErr
+			}
+			w.WriteHeader(resp.StatusCode)
+			w.Write(bodyBytes)
 			return nil
 		}, func(err error) error {
 			fmt.Printf("Fallback[%s] => got error: %+v\n", path, err)

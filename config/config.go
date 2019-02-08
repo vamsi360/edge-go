@@ -9,17 +9,17 @@ import (
 )
 
 type Conf struct {
-	serviceConfs []ServiceRootConf
+	edges []EdgeConf `yaml:"edges"`
 }
 
-type ServiceRootConf struct {
-	serviceName string
-	serviceConf ServiceConf
+type EdgeConf struct {
+	tstore   ServiceConf `yaml:"tstore"`
+	payments ServiceConf `yaml:"payments"`
 }
 
 type ServiceConf struct {
-	serviceDef  core.ServiceDef
-	servicePath core.ServicePath
+	serviceDef  core.ServiceDef  `yaml:"serviceDef"`
+	servicePath core.ServicePath `yaml:"servicePath"`
 }
 
 func ReadConf(fileName string) *Conf {

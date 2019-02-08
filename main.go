@@ -19,8 +19,7 @@ func main() {
 	tstoreSD := core.NewServiceDef("http", "localhost", 18080)
 	serviceRepo.Register(tstoreSD)
 
-	tstoreSPHeaders := map[string]string{}
-	tstoreSP := core.NewServicePath("v1/entity/changes/meta_13", "GET", tstoreSPHeaders, 1, 1000)
+	tstoreSP := core.NewServicePath("v1/entity/changes/meta_13", "GET", 1, 1000, 5)
 	serviceRepo.RegisterEdge(tstoreEP, tstoreSP, tstoreSD)
 
 	sdef1 := serviceRepo.GetDef(tstoreSP)

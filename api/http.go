@@ -1,6 +1,7 @@
 package api
 
 import (
+	"errors"
 	"fmt"
 	"html"
 	"io/ioutil"
@@ -34,11 +35,14 @@ func (ha *HttpApi) Handle(path string, servicePath core.ServicePath) {
 			if err != nil {
 				return err
 			}
+			if resp == nil {
+				return errors.New("empty response from server")
+			}
 			bodyBytes, rErr := ioutil.ReadAll(resp.Body)
 			if rErr != nil {
 				return rErr
 			}
-			w.WriteHeader(resp.StatusCode)
+			//w.WriteHeader(resp.StatusCode)
 			w.Write(bodyBytes)
 			return nil
 		}, func(err error) error {

@@ -57,19 +57,17 @@ func main() {
 }
 
 type conf struct {
-	Service struct {
-		ServiceDef struct {
-			Proto string `yaml:"proto"`
-			Host  string `yaml:"host"`
-			Port  int16 `yaml:"port"`
-		} `yaml:"serviceDef"`
-		ServicePath struct {
-			Path string `yaml:"path"`
-		    Method string `yaml:"method"`
-		    Concurrency int16 `yaml:"concurrency"`
-		    Timeout int16 `yaml:"timeout"`
-		} `yaml:"servicePath"`
-	} `yaml:"service"`
+	Services []struct {
+		Name         string `yaml:"name"`
+		Proto        string `yaml:"proto"`
+		Host         string `yaml:"host"`
+		Port         int    `yaml:"port"`
+		Path         string `yaml:"path"`
+		Method       string `yaml:"method"`
+		Concurrency  int    `yaml:"concurrency"`
+		Timeout      int    `yaml:"timeout"`
+		ErrorPercent int    `yaml:"errorPercent"`
+	} `yaml:"services"`
 }
 
 

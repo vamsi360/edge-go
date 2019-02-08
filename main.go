@@ -39,14 +39,17 @@ func main() {
 	edge := service.NewEdge()
 	httpSvc := service.NewHttpService(serviceRepo, edge)
 
+	conf := config.ReadConf("config.yaml")
+	fmt.Printf("Config: %+v\n", conf)
+
+	// for key, val := range conf.Edges {
+	// 	fmt.Printf("Key: %+v\n")
+	// }
+
 	httpApi := api.NewHttpApi(httpSvc)
 	httpApi.Handle(tstoreEP)
 
-	//httpSvc.Proxy(tstoreEP, tstoreReq)
-
-	//log.Fatal(http.ListenAndServe(":6001", nil))
-	//fmt.Printf("done..\n")
-
-	conf := config.ReadConf("config.yaml")
-	fmt.Printf("Config: %+v\n", conf)
+	// httpSvc.Proxy(tstoreEP, tstoreReq)
+	// log.Fatal(http.ListenAndServe(":6001", nil))
+	// fmt.Printf("done..\n")
 }

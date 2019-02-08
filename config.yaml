@@ -1,23 +1,61 @@
 edges:
-  - tstore:
-      serviceDef:
-        proto: "http"
-        host: "localhost"
-        port: 8443
-      servicePath:
-        path: "/v1"
-        method: "post"
-        concurrency: 16
-        timeout: 4
-        errorPercent: 25
-  - payments:
-      serviceDef:
-        proto: "http"
-        host: "localhost"
-        port: 8443
-      servicePath:
-        path: "/v1"
-        method: "post"
-        concurrency: 16
-        timeout: 4
-        errorPercent: 40
+  tstore:
+    edgePath: "/changes"
+    serviceDef:
+      proto: "http"
+      host: "localhost"
+      port: 8443
+    servicePath:
+      path: "/v1"
+      method: "post"
+      concurrency: 16
+      timeout: 4
+      errorPercent: 25
+  fastOkSvc:
+    edgePath: "/fast-ok"
+    serviceDef:
+      proto: "http"
+      host: "localhost"
+      port: 9001
+    servicePath:
+      path: "/fast-ok"
+      method: "post"
+      concurrency: 16
+      timeout: 100
+      errorPercent: 10
+  fastErrorSvc:
+    edgePath: "/fast-error"
+    serviceDef:
+      proto: "http"
+      host: "localhost"
+      port: 9005
+    servicePath:
+      path: "/fast-error"
+      method: "post"
+      concurrency: 16
+      timeout: 100
+      errorPercent: 50
+  slowOkSvc:
+    edgePath: "/slow-ok"
+    serviceDef:
+      proto: "http"
+      host: "localhost"
+      port: 9101
+    servicePath:
+      path: "/slow-ok"
+      method: "post"
+      concurrency: 16
+      timeout: 100
+      errorPercent: 50
+  slowErrorSvc:
+    edgePath: "/slow-error"
+    serviceDef:
+      proto: "http"
+      host: "localhost"
+      port: 9105
+    servicePath:
+      path: "/slow-error"
+      method: "post"
+      concurrency: 16
+      timeout: 100
+      errorPercent: 50

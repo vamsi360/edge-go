@@ -9,17 +9,21 @@ import (
 )
 
 type Conf struct {
-	edges []EdgeConf `yaml:"edges"`
+	Edges EdgeConf `yaml:"edges"`
 }
 
 type EdgeConf struct {
-	tstore   ServiceConf `yaml:"tstore"`
-	payments ServiceConf `yaml:"payments"`
+	Tstore       ServiceConf `yaml:"tstore"`
+	FastOkSvc    ServiceConf `yaml:"fastOkSvc"`
+	FastErrorSvc ServiceConf `yaml:"fastErrorSvc"`
+	SlowOkSvc    ServiceConf `yaml:"slowOkSvc"`
+	SlowErrorSvc ServiceConf `yaml:"slowErrorSvc"`
 }
 
 type ServiceConf struct {
-	serviceDef  core.ServiceDef  `yaml:"serviceDef"`
-	servicePath core.ServicePath `yaml:"servicePath"`
+	EdgePath    string           `yaml:"edgePath"`
+	ServiceDef  core.ServiceDef  `yaml:"serviceDef"`
+	ServicePath core.ServicePath `yaml:"servicePath"`
 }
 
 func ReadConf(fileName string) *Conf {

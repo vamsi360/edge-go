@@ -4,10 +4,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"time"
 
 	"github.com/edge-go/api"
 	"github.com/edge-go/config"
 	"github.com/edge-go/service"
+	"github.com/rcrowley/go-metrics"
 )
 
 func main() {
@@ -28,6 +31,7 @@ func main() {
 		httpApi.Handle(svcConf.EdgePath, svcConf.ServicePath)
 	}
 
+	go metrics.Log(metrics.DefaultRegistry, 5*time.Second, log.New(os.Stderr, "metrics: ", log.Lmicroseconds))
 	log.Fatal(http.ListenAndServe(":6001", nil))
 	fmt.Printf("done..\n")
 }

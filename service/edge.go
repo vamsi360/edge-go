@@ -6,6 +6,7 @@ import (
 
 	"github.com/edge-go/core"
 	"github.com/edge-go/util"
+	"github.com/rcrowley/go-metrics"
 )
 
 type Edge struct {
@@ -25,9 +26,13 @@ func (e *Edge) Proxy(serviceDef core.ServiceDef, servicePath core.ServicePath, r
 
 	switch method := servicePath.Method; method {
 	case "POST":
-		resp, err = http.Post(url, contentType, request.Body)
+		metrics.GetOrRegisterTimer("post.latency", nil).Time(func() {
+			resp, err = http.Post(url, contentType, request.Body)
+		})
 	case "GET":
-		resp, err = http.Get(url)
+		metrics.GetOrRegisterTimer("get.latency", nil).Time(func() {
+			resp, err = http.Get(url)
+		})
 	}
 
 	if err != nil {

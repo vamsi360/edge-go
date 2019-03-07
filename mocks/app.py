@@ -60,4 +60,4 @@ def slow_error(sleep_time):
 
 
 if __name__ == '__main__':
-    app.run(host=host, port=port, debug=True)
+    app.run(host=host, port=port, debug=False)
